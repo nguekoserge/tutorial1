@@ -1,6 +1,6 @@
 from constructs import Construct
 from cdktf import App, TerraformStack, TerraformOutput
-from imports.aws import provider, s3_bucket, s3_bucket_object
+from imports.aws import provider, s3_bucket, s3_bucket_website_configuration
 
 class StaticWebsiteStack(TerraformStack):
     def __init__(self, scope: Construct, id: str):
@@ -12,8 +12,12 @@ class StaticWebsiteStack(TerraformStack):
         # Create an S3 bucket for the static website
         bucket = s3_bucket.S3Bucket(self, "StaticWebsiteBucket", bucket='serge2s')
 
-        # Upload a local file to the S3 bucket
-        s3_bucket_object.S3BucketObject(self, 'indexhtml', bucket=bucket.bucket, key='index.html', source ='index.html')
+        # Define the website configuration for the S3 bucket
+        website_config = s3_bucket_website_configuration.S3BucketWebsiteConfiguration(self, "WebsiteConfiguration",
+                                                      bucket=bucket.bucket,
+                                                      index_document={"suffix": "index.html"},
+                                                      error_document={"key": "error.html"}
+                                                      )
 
         # Define Terraform outputs
         TerraformOutput(self, 'WebsiteEndpoint', value=bucket.website_endpoint)
