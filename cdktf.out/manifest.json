@@ -1,0 +1,14 @@
+{
+  "version": "0.20.5",
+  "stacks": {
+    "bobo": {
+      "name": "bobo",
+      "constructPath": "bobo",
+      "workingDirectory": "stacks/bobo",
+      "synthesizedStackPath": "stacks/bobo/cdk.tf.json",
+      "stackMetadataPath": "stacks/bobo/metadata.json",
+      "annotations": [],
+      "dependencies": []
+    }
+  }
+}

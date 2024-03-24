@@ -1,0 +1,65 @@
+{
+  "//": {
+    "metadata": {
+      "backend": "local",
+      "stackName": "bobo",
+      "version": "0.20.5"
+    },
+    "outputs": {
+      "bobo": {
+        "WebsiteEndpoint": "WebsiteEndpoint"
+      }
+    }
+  },
+  "output": {
+    "WebsiteEndpoint": {
+      "value": "${aws_s3_bucket.StaticWebsiteBucket.website_endpoint}"
+    }
+  },
+  "provider": {
+    "aws": [
+      {
+        "region": "us-west-2"
+      }
+    ]
+  },
+  "resource": {
+    "aws_s3_bucket": {
+      "StaticWebsiteBucket": {
+        "//": {
+          "metadata": {
+            "path": "bobo/StaticWebsiteBucket",
+            "uniqueId": "StaticWebsiteBucket"
+          }
+        },
+        "bucket": "serge2s"
+      }
+    },
+    "aws_s3_bucket_object": {
+      "indexhtml": {
+        "//": {
+          "metadata": {
+            "path": "bobo/indexhtml",
+            "uniqueId": "indexhtml"
+          }
+        },
+        "bucket": "${aws_s3_bucket.StaticWebsiteBucket.bucket}",
+        "key": "index.html",
+        "source": "index.html"
+      }
+    }
+  },
+  "terraform": {
+    "backend": {
+      "local": {
+        "path": "/home/ec2-user/environment/bobo/terraform.bobo.tfstate"
+      }
+    },
+    "required_providers": {
+      "aws": {
+        "source": "aws",
+        "version": "3.76.1"
+      }
+    }
+  }
+}
